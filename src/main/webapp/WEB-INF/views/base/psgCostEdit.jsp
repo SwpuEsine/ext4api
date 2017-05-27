@@ -6,9 +6,6 @@
     <title></title>
     <meta charset="UTF-8">
     <script src="<c:url value="/static/js/submit.js"/>"/>
-    <script type="text/javascript">
-        $("#pwd").remove();
-    </script>
 </head>
 <body>
 
@@ -16,7 +13,7 @@
     <div class="box-header with-border">
         <h3 class="box-title">通道成本修改</h3>
     </div>
-    <form name="child" action="<c:url value="/user/edit" />" method="post">
+    <form name="child" action="<c:url value="passageCost/edit" />" method="post">
         <jsp:include page="psgCostForm.jsp">
             <jsp:param name="readonly" value="readonly"/>
         </jsp:include>

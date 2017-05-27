@@ -22,9 +22,9 @@
           href="<c:url value="/static/plugins/bootstrap-fileupload/fileinput.min.css"/>"/>
     <link rel="stylesheet" type="text/css"
           href="<c:url value="/static/plugins/toastr/toastr.min.css"/>"/>
-
+	<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/style.css"/>"/>
     <script src="<c:url value="/static/plugins/jQuery/jquery-2.2.3.min.js"/>"></script>
-
+	<script src="<c:url value="/static/plugins/Validform_v5.3.2.js"/>"></script>
     <script src="<c:url value="/static/plugins/icheck/icheck.js"/>"></script>
     <script src="<c:url value="/static/plugins/bootstrap-fileupload/fileinput.min.js"/>"></script>
     <script src="<c:url value="/static/plugins/bootstrap-fileupload/zh.js"/>"></script>

@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="box-footer">
     <div class="center-block" style="width:200px;">
-        <button class="btn btn-social btn-primary" onclick="javascript:$('form[name=child]').submit()"><i
+        <button class="btn btn-social btn-primary" onclick="$('form[name=child]').submit()"><i
                 class="fa  fa-save">&nbsp;</i>保存
         </button>
         &nbsp;&nbsp;

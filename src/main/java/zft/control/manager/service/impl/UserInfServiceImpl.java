@@ -68,11 +68,7 @@ public class UserInfServiceImpl implements UserInfService {
 
     public boolean check(String userId) throws Exception {
         UserInfo check = userInfDao.get(userId);
-        if (check != null) {
-            return false;
-        } else {
-            return true;
-        }
+        return check == null;
     }
 
     @Override

@@ -25,16 +25,8 @@
     $(function(){
         $('#iframe-child :input[name="brhId"]').attr('readonly', 'readonly');
     });
-    function check() {
-        var brhName = $(':input[name="brhName"]');
-        if (!! brhName.val()) {
-            return false;
-        }
 
-        return true;
-    }
     $(function () {
-
         $(".select2").select2({
             placeholder: '请选择...', allowClear: true
         });
@@ -45,13 +37,6 @@
             todayBtn: 'linked',
             language: 'zh-CN'
         });
-        $('form[name="child"]').submit(function () {
-            var form = $('form[name="child"]');
-            if (!check())
-                return false;
-
-            Defaults.submitForm(form);
-            return false;
-        });
     });
 </script>
+<script src="<c:url value="/static/js/submit.js"/>"/>

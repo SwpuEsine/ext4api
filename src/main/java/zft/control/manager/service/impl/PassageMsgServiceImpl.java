@@ -26,25 +26,25 @@ public class PassageMsgServiceImpl implements PassageMsgService {
 	@Override
 	public PassageMsgInfo get(String brhId) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return passageMsgInfoDao.get(brhId);
 	}
 
 	@Override
 	public void add(PassageMsgInfo passageMsgInfo) throws Exception {
-		// TODO Auto-generated method stub
+		passageMsgInfoDao.save(passageMsgInfo);
 
 	}
 
 	@Override
 	public void del(String brhId) throws Exception {
 		// TODO Auto-generated method stub
-
+		passageMsgInfoDao.delete(brhId);
 	}
 
 	@Override
 	public void update(PassageMsgInfo passageMsgInfo) throws Exception {
 		// TODO Auto-generated method stub
-
+		passageMsgInfoDao.update(passageMsgInfo);
 	}
 
 

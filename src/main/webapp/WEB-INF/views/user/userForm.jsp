@@ -15,7 +15,7 @@
             <input type="text" class="form-control" id="userId" name="userId" value="${user.userId}" ${param.readonly}/>
         </td>
         <td class="col-md-1"><label class="label-center">姓名</label></td>
-        <td class="col-md-4">
+        <td class="	">
             <input type="text" class="form-control" name="name" value="${user.name}"
                    maxlength="15" required/>
         </td>
@@ -43,6 +43,10 @@
         </td>
     </tr>
     <tr>
+        <td class="col-md-1"><label class="label-center">机构编号</label></td>
+        <td class="col-md4">
+            <input type="text" name="brhId" class="form-control" required style="width:100%;">
+        </td>
         <td class="col-md-1"><label class="label-center">用户角色</label></td>
         <td class="col-md-4">
             <select name="roleId" class="select2 form-control" style="width: 100%;">
@@ -55,16 +59,21 @@
                 </c:forEach>
             </select>
         </td>
+    </tr>
+
+    <tr>
         <td class="col-md-1"><label class="label-center">用户状态</label></td>
         <td class="col-md-4">
-            <select name="userStatus" class="select2 form-control" style="width: 100%;">
-                <c:forEach var="item" items="${userStatus.keySet()}" varStatus="status">
-                    <option <c:if test='${item == user.userStatus}'>
-                        selected
-                    </c:if> value="${item}">${userStatus.get(item)}</option>
-                </c:forEach>
-            </select>
+        <select name="userStatus" class="select2 form-control" style="width: 100%;">
+        <c:forEach var="item" items="${userStatus.keySet()}" varStatus="status">
+        <option <c:if test='${item == user.userStatus}'>
+        selected
+    </c:if> value="${item}">${userStatus.get(item)}</option>
+    </c:forEach>
+        </select>
         </td>
+        <td class="col-md-1"></td>
+        <td class="col-md-4"></td>
     </tr>
 </table>
 </body>

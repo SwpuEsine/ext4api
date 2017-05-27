@@ -59,4 +59,10 @@ public class BrhInfoServiceImpl implements BrhInfoService {
         BeanUtils.copyProperties(brhInfo, edit, Tools.getNullPropertyNames(brhInfo));
         brhInfoDao.update(edit);
     }
+
+    @Override
+    public boolean check(String brhId) throws Exception {
+        BrhInfo brhInfo = get(brhId);
+        return brhInfo==null;
+    }
 }

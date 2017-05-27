@@ -65,4 +65,9 @@ public class RouteSettleCtlServiceImpl implements RouteSettleCtlService {
     public void delete(String id) throws Exception {
         routeSettleCtlDao.delete(id);
     }
+
+    @Override
+    public boolean check(String id) throws Exception {
+        return get(id) == null;
+    }
 }

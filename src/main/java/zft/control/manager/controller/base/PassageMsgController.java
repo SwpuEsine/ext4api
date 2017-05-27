@@ -1,7 +1,10 @@
 package zft.control.manager.controller.base;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import zft.control.manager.entity.BrhInfo;
+import zft.control.manager.entity.PassageCostInfo;
 import zft.control.manager.entity.PassageMsgInfo;
 import zft.control.manager.objs.view.GridListRes;
 import zft.control.manager.objs.view.ResponseBase;
 import zft.control.manager.service.PassageMsgService;
 import zft.control.manager.tools.Constants;
+import zft.control.manager.tools.StringUtils;
+import zft.control.manager.tools.SystemFiles;
 import zft.control.manager.tools.Tools;
 
 @Controller
@@ -46,7 +52,6 @@ public class PassageMsgController {
 	    public GridListRes<Map<String, Object>> list(Integer offset, Integer limit,
 	    		PassageMsgInfo pmi) {
 	    	Map<String, String> m=new HashMap<String,String>();
-	    	System.out.println(">>>>>>>>>>"+pmi.getOverrunFlag());
 	    	m.put("inst_Code",pmi.getInstCode());
 	    	m.put("inst_Name", pmi.getInstName());
 	    	m.put("inst_Stat", pmi.getInstStat());
@@ -61,7 +66,7 @@ public class PassageMsgController {
 	     */
 	    @RequestMapping(value = "/add", method = RequestMethod.GET)
 	    public String toAdd(Model model) throws Exception {
-	    	return "base/passageMsgAdd";
+	    	return "base/psgMsgAdd";
 	    }
 
 	    /**
@@ -73,15 +78,14 @@ public class PassageMsgController {
 	     */
 	    @RequestMapping(value = "/add", method = RequestMethod.POST)
 	    @ResponseBody
-	    public ResponseBase add(Model model, BrhInfo brhInfo) throws Exception {
-			return null;
-//	        if (StringUtils.isNotNull(brhInfo.getBrhName())) {
-//	            brhInfoService.add(brhInfo);
-//	        } else {
-//	            model.addAttribute("error", SystemFiles.getCode("000022"));
-//	            Tools.returnWeb("000077", "机构名称");
-//	        }
-//	        return Tools.returnWeb(Constants.SUCCESS);
+	    public ResponseBase add(HttpSession session, PassageMsgInfo pmi) throws Exception {    	
+	    	if(passageMsglService.get(pmi.getInstCode())!=null){
+	    		return Tools.returnWeb("000007");
+	    	}
+	    	pmi.setUpdateTime(Tools.getDateTime());
+	    	pmi.setInsertTime(Tools.getDateTime());
+	    	passageMsglService.add(pmi);
+	    	return Tools.returnWeb(Constants.SUCCESS);
 	    }
 
 	    /**
@@ -91,10 +95,14 @@ public class PassageMsgController {
 	     * @throws Exception
 	     */
 	    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-	    public String toEdit(Model model) throws Exception {
-//	        List<BrhInfo> brhInfoList = brhInfoService.findAll();
-//	        model.addAttribute("brhInfoList", brhInfoList);
-	        return "brh/brhEdit";
+	    public String toEdit(Model model,String id) throws Exception {
+	    	if (!StringUtils.isNotNull(id)) {
+	              model.addAttribute("error", SystemFiles.getCode("000021"));
+	              return "/error/error";
+	        }
+	    	PassageMsgInfo pmi = passageMsglService.get(id);
+		    model.addAttribute("pmi", pmi);
+	        return "base/psgMsgEdit";
 	    }
 
 	    /**
@@ -104,10 +112,8 @@ public class PassageMsgController {
 	     * @throws Exception
 	     */
 	    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-	    public ResponseBase edit(BrhInfo brhInfo) throws Exception {
-//	        if (!StringUtils.isNotNull(brhInfo.getBrhId()) || !StringUtils.isNotNull(brhInfo.getBrhName()))
-//	            return Tools.returnWeb("000021");
-//	        brhInfoService.update(brhInfo);
+	    public ResponseBase edit(PassageMsgInfo pmi) throws Exception {
+	        passageMsglService.update(pmi);
 	        return Tools.returnWeb(Constants.SUCCESS);
 	    }
 
@@ -119,10 +125,10 @@ public class PassageMsgController {
 	     */
 	    @RequestMapping(value = "/del")
 	    @ResponseBody
-	    public ResponseBase del(String brhId) throws Exception {
-//	        if (!StringUtils.isNotNull(brhId))
-//	            return Tools.returnWeb("000021");
-//	        brhInfoService.del(brhId);
+	    public ResponseBase del(String id) throws Exception {
+	        if (!StringUtils.isNotNull(id))
+	            return Tools.returnWeb("000021");
+	        passageMsglService.del(id);
 	        return Tools.returnWeb(Constants.SUCCESS);
 	    }
 }

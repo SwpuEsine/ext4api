@@ -8,7 +8,6 @@ import zft.control.manager.entity.RouteSettleCtl;
 import zft.control.manager.objs.view.GridListRes;
 import zft.control.manager.tools.SqlUtils;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,10 +26,6 @@ public class RouteSettleCtlDaoImpl extends GenericBase<RouteSettleCtl, String> i
         StringBuffer sql = new StringBuffer();
         sql.append(" SELECT                                                                                     ");
         sql.append(" 	t.ID, t.ROUTE_NAME, t.ROUTE_CTL_ID, t.ROUTE_CTL_STA, t.ISSUER_USE_FLAG , t.STLM_TYPE    ");
-        //sql.append(" 	, t.ISSUER_CD, t.TXN_AMT_USE_FLAG, t.MIN_TXN_AMT, t.MAX_TXN_AMT, t.CITY_CODE_USE_FLAG   ");
-        //sql.append(" 	, t.CITY_CODE, t.MCHT_NO_USE_FLAG, t.MCHT_NO, t.STLM_TYPE_USE_FLAG         ");
-        //sql.append(" 	, t.CARD_BIN_USE_FLAG, t.CARD_BIN, t.RESERVE1_USE_FLAG, t.RESERVE1, t.RESERVE2_USE_FLAG ");
-        //sql.append(" 	, t.RESERVE2, t.RESERVE3_USE_FLAG, t.RESERVE3                              ");
         sql.append(" 	, t.UPD_USR_ID, t.REC_UPD_TS, t.REC_CRT_TS , t.LAST_OPER_IN, t.INST_CODE                             ");
         sql.append(" FROM TBL_ROUTE_SETTLE_CTL t                                                                ");
 
@@ -47,20 +42,19 @@ public class RouteSettleCtlDaoImpl extends GenericBase<RouteSettleCtl, String> i
         query.setMaxResults(limit);
         query.setFirstResult(offset);
 
-        SqlUtils.setParameterLike(query, "id", params.get("id"));
-        SqlUtils.setParameterLike(query, "routeName", params.get("routeName"));
-        SqlUtils.setParameterLike(query, "routeCtlSta", params.get("routeCtlSta"));
-        SqlUtils.setParameterLike(query, "routeCtlId", params.get("routeCtlId"));
         GridListRes<Map<String, Object>> res = new GridListRes<>();
         res.setRows(query.list());
 
         query = this.getCurrentSession().createSQLQuery("SELECT COUNT(1) FROM (" + sql.toString() +")");
+        res.setTotal(Integer.parseInt(query.list().get(0).toString()));
+        setQueryParams(query, params);
+        return res;
+    }
+
+    private void setQueryParams(SQLQuery query, Map<String, String> params) {
         SqlUtils.setParameterLike(query, "id", params.get("id"));
         SqlUtils.setParameterLike(query, "routeName", params.get("routeName"));
         SqlUtils.setParameterLike(query, "routeCtlSta", params.get("routeCtlSta"));
         SqlUtils.setParameterLike(query, "routeCtlId", params.get("routeCtlId"));
-
-        res.setTotal(Integer.parseInt(query.list().get(0).toString()));
-        return res;
     }
 }

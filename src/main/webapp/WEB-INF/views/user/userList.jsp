@@ -80,6 +80,8 @@
                 formatter: function (value) {
                     return getParams("${userStatus.keySet()}", "${userStatus.values()}", value);
                 }
+            }, {
+                field: 'BRH_ID', title: '机构编号'
             }
         ],
         params: function () {

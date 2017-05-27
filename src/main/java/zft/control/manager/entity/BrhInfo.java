@@ -1,5 +1,7 @@
 package zft.control.manager.entity;
 
+import zft.control.manager.tools.StringUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -223,5 +225,9 @@ public class BrhInfo implements Serializable {
 
     public void setLastUpdTs(String lastUpdTs) {
         this.lastUpdTs = lastUpdTs;
+    }
+
+    public boolean selfCheck() {
+        return StringUtils.isNotNull(getBrhId()) && StringUtils.isNotNull(getBrhName());
     }
 }

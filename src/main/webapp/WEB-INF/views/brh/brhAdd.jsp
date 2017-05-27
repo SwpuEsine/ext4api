@@ -22,13 +22,17 @@
 </html>
 
 <script>
-    function check() {
-        return true;
-
-    }
     $(function () {
-        $(':checkbox').click(function () {
-            $(':checkbox', $(this).closest('li')).prop('checked', this.checked);
+        $(".select2").select2({
+            placeholder: '请选择...',
+            allowClear: true
+        });
+        $(':input[name=regDt]').datepicker({
+            format: 'yyyymmdd',
+            weekStart: 1,
+            autoclose: true,
+            todayBtn: 'linked',
+            language: 'zh-CN'
         });
 
         $('form[name="child"]').submit(function () {
@@ -39,16 +43,46 @@
             return false;
         });
 
-        $(".select2").select2({
-            placeholder: '请选择...',
-            allowClear: true
-        });
-        $('input[name=regDt]').datepicker({
-            format: 'yyyymmdd',
-            weekStart: 1,
-            autoclose: true,
-            todayBtn: 'linked',
-            language: 'zh-CN'
-        });
+        $("#iframe-child :input[name='brhId']").blur(checkBrhId)
     });
+
+    function checkBrhId() {
+        var brhId = $("#iframe-child :input[name='brhId']");
+        var flag = true;
+        var id = brhId.val();
+        $.ajax({
+            type: 'get',
+            url: '<%=request.getContextPath()%>/brh/check.do',
+            data: {'brhId': id},
+            dataType: 'json',
+            success: function(json) {
+                if (json.result_code == "000000") {
+                }else {
+                    $(brhId).val("");
+                    modal({
+                        type: 'error',
+                        title: '错误',
+                        text: json.result_msg
+                    });
+                    flag = false;
+                }
+            }
+        });
+        return flag;
+    }
+
+    function check() {
+        var brhId = $("#iframe-child :input[name='brhId']");
+        if(brhId.val().trim() == "") {
+            modal({
+                type: 'error',
+                title: '错误',
+                text: '请输入机构编号'
+            });
+            return false;
+        }
+
+        return true;
+    }
 </script>
+<script src="<c:url value="/static/js/submit.js"/>"/>

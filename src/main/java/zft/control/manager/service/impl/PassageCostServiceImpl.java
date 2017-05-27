@@ -30,7 +30,7 @@ public class PassageCostServiceImpl implements PassageCostService {
 	@Override
 	public PassageCostInfo get(String brhId) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return passageCostInfDao.get(Integer.parseInt(brhId));
 	}
 
 	@Override
@@ -42,13 +42,12 @@ public class PassageCostServiceImpl implements PassageCostService {
 	@Override
 	public void del(String brhId) throws Exception {
 		// TODO Auto-generated method stub
-
+		passageCostInfDao.delete(Integer.parseInt(brhId));
 	}
 
 	@Override
 	public void update(PassageCostInfo passageCostInfo) throws Exception {
-		// TODO Auto-generated method stub
-
+		passageCostInfDao.update(passageCostInfo);
 	}
 
 

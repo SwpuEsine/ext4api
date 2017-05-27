@@ -10,82 +10,195 @@
 <input type="hidden" name="userMenu"/>
 <table class="table">
     <tr>
-        <td class="col-md-1"><label class="label-center">费率编号</label></td>
+        <td class="col-md-1"><label class="label-center">优先级</label></td>
         <td class="col-md-4">
-            <input type="text" class="form-control" id="userId" name="userId" value="${user.userId}" ${param.readonly}/>
+            <input type="text" class="form-control" id="userId" name="instCode" value="${pci.instCode}" ${param.readonly}/>
         </td>
-        <td class="col-md-1"><label class="label-center">对应使用通道</label></td>
+        <td class="col-md-1"><label class="label-center">通道名称</label></td>
         <td class="col-md-4">
-            <input type="text" class="form-control" name="name" value="${user.name}"
+            <input type="text" class="form-control" name="instName" value="${pci.instCode}"
                    maxlength="15" required/>
         </td>
     </tr>
     <tr>
-        <td class="col-md-1"><label class="label-center">卡种</label></td>
+        <td class="col-md-1"><label class="label-center">通道使用标识</label></td>
         <td class="col-md-4">
-            <input type="password" class="form-control" name="userPwdShow" maxlength="40"/>
+            <input type="password" class="form-control" name="instStat" maxlength="40" value="${pci.instCode}"/>
             <input type="hidden" class="form-control" id="passwd" name="passwd" maxlength="40"/>
         </td>
-        <td class="col-md-1"><label class="label-center">商户MCC</label></td>
+        <td class="col-md-1"><label class="label-center">卡类型使用标识</label></td>
         <td class="col-md-4">
-            <input type="password" class="form-control" name="userPwd2Show" maxlength="40"/>
+            <input type="password" class="form-control" name="srvId" maxlength="40" value="${pci.instCode}"/>
             <input type="hidden" class="form-control" name="passwd2" maxlength="40"/>
         </td>
     </tr>
     <tr>
-        <td class="col-md-1"><label class="label-center">计费类型</label></td>
+        <td class="col-md-1"><label class="label-center">卡类型设置</label></td>
         <td class="col-md-4">
-            <input type="text" class="form-control" name="tel" value="${user.tel}" maxlength="11"/>
+            <input type="text" class="form-control" name="chgFlag" value="${pci.instCode}" maxlength="11"/>
         </td>
-        <td class="col-md-1"><label class="label-center">固定手续费</label></td>
+        <td class="col-md-1"><label class="label-center">发卡方设置</label></td>
         <td class="col-md-4">
-            <input type="text" class="form-control" name="email" value="${user.email}" maxlength="30"/>
-        </td>
-    </tr>
-    <tr>
-        <td class="col-md-1"><label class="label-center">交易上限(元)</label></td>
-        <td class="col-md-4">
-            <select name="roleId" class="select2 form-control" style="width: 100%;">
-                <c:forEach var="item" items="${role}" varStatus="status">
-                    <option
-                            <c:if test='${item.roleId == user.roleId}'>
-                                selected
-                            </c:if>
-                            value="${item.roleId}">${item.roleName}</option>
-                </c:forEach>
-            </select>
-        </td>
-        <td class="col-md-1"><label class="label-center">交易下线(元)</label></td>
-        <td class="col-md-4">
-            <select name="userStatus" class="select2 form-control" style="width: 100%;">
-                <c:forEach var="item" items="${userStatus.keySet()}" varStatus="status">
-                    <option <c:if test='${item == user.userStatus}'>
-                        selected
-                    </c:if> value="${item}">${userStatus.get(item)}</option>
-                </c:forEach>
-            </select>
+            <input type="text" class="form-control" name="xMchtNo" value="${pci.instCode}" maxlength="30"/>
         </td>
     </tr>
     <tr>
-        <td class="col-md-1"><label class="label-center">手续费上限(元)</label></td>
+        <td class="col-md-1"><label class="label-center">发卡方编号</label></td>
         <td class="col-md-4">
-            <input type="text" class="form-control" id="userId" name="userId" value="${user.userId}" ${param.readonly}/>
+          <input type="text" class="form-control" name="xTermId" value="${pci.instCode}" maxlength="30"/>
         </td>
-        <td class="col-md-1"><label class="label-center">手续费下限(元)</label></td>
+        <td class="col-md-1"><label class="label-center">卡Bin长度</label></td>
+		<td class="col-md-4">
+          <input type="text" class="form-control" name="xBrhCode" value="${pci.instCode}" maxlength="30"/>
+        </td>
+    </tr>
+    <tr>
+        <td class="col-md-1"><label class="label-center">卡Bin</label></td>
         <td class="col-md-4">
-            <input type="text" class="form-control" name="name" value="${user.name}"
+            <input type="text" class="form-control" id="userId" name="dayTotMaxAmt" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">交易代码设置</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" name="monTotMaxAmt" value="${pci.instCode}"
                    maxlength="15" required/>
         </td>
     </tr>
     <tr>
-        <td class="col-md-1"><label class="label-center">扣率(%)</label></td>
+        <td class="col-md-1"><label class="label-center">交易代码</label></td>
         <td class="col-md-4">
-            <input type="text" class="form-control" id="userId" name="userId" value="${user.userId}" ${param.readonly}/>
+            <input type="text" class="form-control" id="userId" name="overrunFlag" value="${pci.instCode}" ${param.readonly}/>
         </td>
-        <td class="col-md-1"><label class="label-center">费率说明</label></td>
+        <td class="col-md-1"><label class="label-center">交易金额设置</label></td>
         <td class="col-md-4">
-            <input type="text" class="form-control" name="name" value="${user.name}"
+            <input type="text" class="form-control" name="riskDayTxnAmt" value="${pci.instCode}"
                    maxlength="15" required/>
+        </td>
+    </tr>
+    <tr>
+        <td class="col-md-1"><label class="label-center">最小金额</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskDayTxnNum" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">最大金额</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" name="riskMaxTxnAmt" value="${pci.instCode}"
+                   maxlength="15" required/>
+        </td>
+    </tr>
+     <tr>
+        <td class="col-md-1"><label class="label-center">商户类型使用标识</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">商户类型</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+    </tr>
+    <tr>
+        <td class="col-md-1"><label class="label-center">终端类型使用标识</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">终端类型</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+    </tr>
+    <tr>
+        <td class="col-md-1"><label class="label-center">集团使用标识</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">集团编号</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+    </tr>
+     <tr>
+        <td class="col-md-1"><label class="label-center">商户费率使用标识</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">商户费率类型</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+    </tr>
+     <tr>
+        <td class="col-md-1"><label class="label-center">产品类型使用标识</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">产品类型</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+    </tr>
+     <tr>
+        <td class="col-md-1"><label class="label-center">使用的通道池</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">商户组别使用标识</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+    </tr>
+     <tr>
+        <td class="col-md-1"><label class="label-center">商户组别</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">地区码使用标识</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+    </tr>
+    <tr>
+        <td class="col-md-1"><label class="label-center">商户地区码</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">特殊类型标识</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+    </tr>
+    <tr>
+        <td class="col-md-1"><label class="label-center">商户特殊类型</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">商户池使用标识</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+    </tr>
+    <tr>
+        <td class="col-md-1"><label class="label-center">特定商户池</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">行业细类使用标识</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+    </tr>
+    <tr>
+        <td class="col-md-1"><label class="label-center">行业细类</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+        <td class="col-md-1"><label class="label-center">特定MCC使用标识</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
+        </td>
+    </tr>
+    <tr>
+        <td class="col-md-1"><label class="label-center">MCC池</label></td>
+        <td class="col-md-4">
+            <input type="text" class="form-control" id="userId" name="riskCtlType" value="${pci.instCode}" ${param.readonly}/>
         </td>
     </tr>
 </table>

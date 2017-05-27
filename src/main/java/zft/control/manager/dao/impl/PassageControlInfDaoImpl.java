@@ -15,7 +15,7 @@ import zft.control.manager.entity.RoleInf;
 import zft.control.manager.objs.view.GridListRes;
 import zft.control.manager.tools.SqlUtils;
 @Repository("passageControlInfDao")
-public class PassageControlInfDaoImpl extends GenericBase<PassageCostInfo, Integer> implements PassageControlInfDao {
+public class PassageControlInfDaoImpl extends GenericBase<PassageControlInfo, String> implements PassageControlInfDao {
 
 	@Override
 	public GridListRes<Map<String, Object>> findList(Integer offset,

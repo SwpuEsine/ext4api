@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import zft.control.manager.entity.PassageCostInfo;
+import zft.control.manager.entity.RoleInf;
 import zft.control.manager.entity.UserInfo;
 import zft.control.manager.objs.view.GridListRes;
 import zft.control.manager.objs.view.ResponseBase;
 import zft.control.manager.service.PassageCostService;
 import zft.control.manager.tools.Constants;
+import zft.control.manager.tools.StringUtils;
+import zft.control.manager.tools.SystemFiles;
 import zft.control.manager.tools.Tools;
 
 @Controller
@@ -64,8 +67,6 @@ public class PassageCostController {
 	     */
 	    @RequestMapping(value = "/add", method = RequestMethod.GET)
 	    public String toAdd(Model model) throws Exception {
-	        List<PassageCostInfo> pci = passageCostService.findAll();
-	        model.addAttribute("pci", pci);
 	        return "base/psgCostAdd";
 	    }
 
@@ -94,10 +95,17 @@ public class PassageCostController {
 	     * @throws Exception
 	     */
 	    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-	    public String toEdit(Model model) throws Exception {
-//	        List<PassageCostInfo pci> brhInfoList = brhInfoService.findAll();
-//	        model.addAttribute("brhInfoList", brhInfoList);
-	        return "brh/brhEdit";
+	    public String toEdit(Model model,String id) throws Exception {
+	       if (!StringUtils.isNotNull(id)) {
+            model.addAttribute("error", SystemFiles.getCode("000021"));
+            return "/error/error";
+        }
+	       //List<RoleInf> role = passageCostService.findAll();
+	       PassageCostInfo passageCostInfo = passageCostService.get(id);
+	       model.addAttribute("pci", passageCostInfo);
+/*	       model.addAttribute("userStatus", passageCostService.valNameMap("UserStatus"));
+	       model.addAttribute("user", userInf);*/
+	        return "base/psgCostEdit";
 	    }
 
 	    /**
@@ -108,9 +116,9 @@ public class PassageCostController {
 	     */
 	    @RequestMapping(value = "/edit", method = RequestMethod.POST)
 	    public ResponseBase edit(PassageCostInfo pci) throws Exception {
-//	        if (!StringUtils.isNotNull(brhInfo.getBrhId()) || !StringUtils.isNotNull(brhInfo.getBrhName()))
-//	            return Tools.returnWeb("000021");
-//	        brhInfoService.update(brhInfo);
+	    	System.out.println(":修改");
+	    	System.out.println(pci.getInstCode());
+	    	passageCostService.update(pci);  	
 	        return Tools.returnWeb(Constants.SUCCESS);
 	    }
 
@@ -120,12 +128,12 @@ public class PassageCostController {
 	     * @return
 	     * @throws Exception
 	     */
-	    @RequestMapping(value = "/del")
+	    @RequestMapping(value = "/del",method = RequestMethod.POST)
 	    @ResponseBody
-	    public ResponseBase del(String brhId) throws Exception {
-//	        if (!StringUtils.isNotNull(brhId))
-//	            return Tools.returnWeb("000021");
-//	        brhInfoService.del(brhId);
+	    public ResponseBase del(String id) throws Exception {
+	    	if (!StringUtils.isNotNull(id))
+	            return Tools.returnWeb("000021");
+	    	passageCostService.del(id);
 	        return Tools.returnWeb(Constants.SUCCESS);
 	    }
 }

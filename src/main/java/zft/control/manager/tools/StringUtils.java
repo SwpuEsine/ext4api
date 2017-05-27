@@ -8,24 +8,12 @@ public class StringUtils {
 
     public static boolean isNotNull(Object str) {
         if (str instanceof String) {
-            if (str != null && !"".equals(str)) {
-                return true;
-            } else {
-                return false;
-            }
+            return str != null && !"".equals(str);
         } else if (str instanceof Integer) {
             Integer tmp = Integer.parseInt((String) str);
-            if (tmp != 0 && tmp != null) {
-                return true;
-            } else {
-                return false;
-            }
+            return tmp != 0 && tmp != null;
         } else {
-            if (str != null) {
-                return true;
-            } else {
-                return false;
-            }
+            return str != null;
         }
     }
 

@@ -44,10 +44,10 @@
             <button type="button" class="btn btn-default" onclick="Defaults.openAdd(this)"
                     url="passageControl/add"><i class="fa fa-plus"></i>&nbsp;新增
             </button>
-            <button type="button" class="btn btn-default" onclick="Defaults.openEdit(this,'BRH_ID')"
+            <button type="button" class="btn btn-default" onclick="Defaults.openEdit(this,'ID')"
                     url="<c:url value="passageControl/edit"/>"><i class="fa fa-edit"></i>&nbsp;修改
             </button>
-            <button class="btn btn-default" onclick="Defaults.openDel(this,'BRH_ID')"
+            <button class="btn btn-default" onclick="Defaults.openDel(this,'ID')"
                     url="<c:url value="passageControl/del"/>"><i class="fa fa-remove"></i>&nbsp;删除
             </button>
         </div>

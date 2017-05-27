@@ -3,6 +3,8 @@ package zft.control.manager.controller.base;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import zft.control.manager.entity.BrhInfo;
 import zft.control.manager.entity.PassageControlInfo;
+import zft.control.manager.entity.PassageCostInfo;
+import zft.control.manager.entity.UserInfo;
 import zft.control.manager.objs.view.GridListRes;
 import zft.control.manager.objs.view.ResponseBase;
 import zft.control.manager.service.PassageControlService;
 import zft.control.manager.tools.Constants;
+import zft.control.manager.tools.StringUtils;
+import zft.control.manager.tools.SystemFiles;
 import zft.control.manager.tools.Tools;
 
 @Controller
@@ -60,10 +66,7 @@ public class PassageCtrlController {
 	     */
 	    @RequestMapping(value = "/add", method = RequestMethod.GET)
 	    public String toAdd(Model model) throws Exception {
-			return null;
-//	        List<BrhInfo> brhInfoList = passageCostService.findAll();
-//	        model.addAttribute("brhInfoList", brhInfoList);
-//	        return "brh/brhAdd";
+	    		return "base/psgControlAdd";
 	    }
 
 	    /**
@@ -75,15 +78,13 @@ public class PassageCtrlController {
 	     */
 	    @RequestMapping(value = "/add", method = RequestMethod.POST)
 	    @ResponseBody
-	    public ResponseBase add(Model model, BrhInfo brhInfo) throws Exception {
-			return null;
-//	        if (StringUtils.isNotNull(brhInfo.getBrhName())) {
-//	            brhInfoService.add(brhInfo);
-//	        } else {
-//	            model.addAttribute("error", SystemFiles.getCode("000022"));
-//	            Tools.returnWeb("000077", "机构名称");
-//	        }
-//	        return Tools.returnWeb(Constants.SUCCESS);
+	    public ResponseBase add(Model model, PassageControlInfo pci,HttpSession session) throws Exception {
+	    	pci.setUpdOpr(((UserInfo)session.getAttribute(Constants.SESSION_USER)).getUserId());
+			pci.setCrtOpr(((UserInfo)session.getAttribute(Constants.SESSION_USER)).getUserId());
+			pci.setCrtTs(Tools.getDateTime());;   // 创建时间
+			pci.setUpdTs(Tools.getDateTime()) ; 
+			passageControlService.add(pci);
+	        return Tools.returnWeb(Constants.SUCCESS);
 	    }
 
 	    /**
@@ -93,10 +94,14 @@ public class PassageCtrlController {
 	     * @throws Exception
 	     */
 	    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-	    public String toEdit(Model model) throws Exception {
-//	        List<BrhInfo> brhInfoList = brhInfoService.findAll();
-//	        model.addAttribute("brhInfoList", brhInfoList);
-	        return "brh/brhEdit";
+	    public String toEdit(Model model,String id) throws Exception {
+	    	  if (!StringUtils.isNotNull(id)) {
+	              model.addAttribute("error", SystemFiles.getCode("000021"));
+	              return "/error/error";
+	          }
+	    	PassageControlInfo pci = passageControlService.get(id);
+		    model.addAttribute("pci", pci);
+	        return "base/psgControlEdit";
 	    }
 
 	    /**
@@ -106,10 +111,8 @@ public class PassageCtrlController {
 	     * @throws Exception
 	     */
 	    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-	    public ResponseBase edit(BrhInfo brhInfo) throws Exception {
-//	        if (!StringUtils.isNotNull(brhInfo.getBrhId()) || !StringUtils.isNotNull(brhInfo.getBrhName()))
-//	            return Tools.returnWeb("000021");
-//	        brhInfoService.update(brhInfo);
+	    public ResponseBase edit(PassageControlInfo pci) throws Exception {
+	    	passageControlService.update(pci);  	
 	        return Tools.returnWeb(Constants.SUCCESS);
 	    }
 
@@ -121,10 +124,11 @@ public class PassageCtrlController {
 	     */
 	    @RequestMapping(value = "/del")
 	    @ResponseBody
-	    public ResponseBase del(String brhId) throws Exception {
-//	        if (!StringUtils.isNotNull(brhId))
-//	            return Tools.returnWeb("000021");
-//	        brhInfoService.del(brhId);
+	    public ResponseBase del(String id) throws Exception {
+	        if (!StringUtils.isNotNull(id))
+	            return Tools.returnWeb("000021");
+	        System.out.println("我为什么没有权限");
+	        passageControlService.del(id);
 	        return Tools.returnWeb(Constants.SUCCESS);
 	    }
 }

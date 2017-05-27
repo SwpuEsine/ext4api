@@ -12,7 +12,7 @@ import zft.control.manager.entity.PassageCostInfo;
 import zft.control.manager.entity.PassageMsgInfo;
 import zft.control.manager.objs.view.GridListRes;
 @Repository("passageMsgInfoDao")
-public class PassageMsgInfoDaoImpl extends GenericBase<PassageMsgInfo, Integer> implements PassageMsgInfoDao {
+public class PassageMsgInfoDaoImpl extends GenericBase<PassageMsgInfo, String> implements PassageMsgInfoDao {
 
 	@Override
 	public GridListRes<Map<String, Object>> findList(Integer offset,

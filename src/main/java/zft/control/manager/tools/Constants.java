@@ -11,7 +11,7 @@ public class Constants {
     public static final String MCHT_DATA_DISK;
     public static final int SELECT_CACHE;
 
-
+    private Constants(){}
     static {
         APP_DOWNLOAD_DISK = SystemFiles.getSystem("APP_DOWNLOAD_DISK");
         TASK_IMAGE_DISK = SystemFiles.getSystem("TASK_IMAGE_DISK");

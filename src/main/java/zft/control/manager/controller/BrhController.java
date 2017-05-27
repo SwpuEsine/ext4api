@@ -25,9 +25,11 @@ public class BrhController {
     @Autowired
     private BrhInfoService brhInfoService;
 
-
     @Autowired
     private RedisService redisService;
+
+    public static final String BRH_STATUS = "BranchStatus";
+    public static final String BRH_TYPE = "BranchType";
 
     /**
      * 进入主界面
@@ -37,9 +39,9 @@ public class BrhController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String toList(Model model) {
         // 添加数据字典
-        Map<String, String> brhTypeList = redisService.valNameMap("BranchType");
+        Map<String, String> brhTypeList = redisService.valNameMap(BRH_TYPE);
         model.addAttribute("brhTypeList", brhTypeList);
-        Map<String, String> brhStatusList = redisService.valNameMap("BranchStatus");
+        Map<String, String> brhStatusList = redisService.valNameMap(BRH_STATUS);
         model.addAttribute("brhStatusList", brhStatusList);
         return "brh/brhList";
     }
@@ -67,9 +69,9 @@ public class BrhController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String toAdd(Model model) throws Exception {
         // 添加数据字典
-        Map<String, String> brhTypeList = redisService.valNameMap("BranchType");
+        Map<String, String> brhTypeList = redisService.valNameMap(BRH_TYPE);
         model.addAttribute("brhTypeList", brhTypeList);
-        Map<String, String> brhStatusList = redisService.valNameMap("BranchStatus");
+        Map<String, String> brhStatusList = redisService.valNameMap(BRH_STATUS);
         model.addAttribute("brhStatusList", brhStatusList);
         return "brh/brhAdd";
     }
@@ -85,11 +87,11 @@ public class BrhController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseBase add(Model model, BrhInfo brhInfo) throws Exception {
-        if (StringUtils.isNotNull(brhInfo.getBrhId())) {
+        if (brhInfo.selfCheck()) {
             brhInfoService.add(brhInfo);
         } else {
             model.addAttribute("error", SystemFiles.getCode("000022"));
-            Tools.returnWeb("000077", "机构编号");
+            return Tools.returnWeb("000077", "机构编号");
         }
         return Tools.returnWeb(Constants.SUCCESS);
     }
@@ -102,13 +104,7 @@ public class BrhController {
      */
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String toEdit(Model model, String id) throws Exception {
-        BrhInfo brh = brhInfoService.get(id);
-        model.addAttribute("brh", brh);
-        // 添加数据字典
-        Map<String, String> brhTypeList = redisService.valNameMap("BranchType");
-        model.addAttribute("brhTypeList", brhTypeList);
-        Map<String, String> brhStatusList = redisService.valNameMap("BranchStatus");
-        model.addAttribute("brhStatusList", brhStatusList);
+        setDetail2Page(model, id);
         return "brh/brhEdit";
     }
 
@@ -122,7 +118,7 @@ public class BrhController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
     public ResponseBase edit(BrhInfo brhInfo) throws Exception {
-        if (!StringUtils.isNotNull(brhInfo.getBrhId()))
+        if (!brhInfo.selfCheck())
             return Tools.returnWeb("000021");
         brhInfoService.update(brhInfo);
         return Tools.returnWeb(Constants.SUCCESS);
@@ -146,13 +142,27 @@ public class BrhController {
 
     @RequestMapping(value = "/detail")
     public String view(Model model, String id) throws Exception {
+        setDetail2Page(model, id);
+        return "brh/brhView";
+    }
+
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseBase check(String brhId) throws Exception {
+        boolean b = brhInfoService.check(brhId);
+        if (b) {
+            return Tools.returnWeb(Constants.SUCCESS);
+        }
+        return Tools.returnWeb("000100", "机构编号");
+    }
+
+    private void setDetail2Page(Model model, String id) throws Exception {
         BrhInfo brh = brhInfoService.get(id);
         model.addAttribute("brh", brh);
         // 添加数据字典
-        Map<String, String> brhTypeList = redisService.valNameMap("BranchType");
+        Map<String, String> brhTypeList = redisService.valNameMap(BRH_TYPE);
         model.addAttribute("brhTypeList", brhTypeList);
-        Map<String, String> brhStatusList = redisService.valNameMap("BranchStatus");
+        Map<String, String> brhStatusList = redisService.valNameMap(BRH_STATUS);
         model.addAttribute("brhStatusList", brhStatusList);
-        return "brh/brhView";
     }
 }

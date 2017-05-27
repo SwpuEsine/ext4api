@@ -12,7 +12,8 @@
     <div class="box-header with-border">
         <h3 class="box-title">清算通道增加</h3>
     </div>
-    <form name="child" class="form-inline" action="<c:url value="/routeSettleCtl/add" />" method="post" >
+    <form name="child" class="form-inline" action="<c:url value="/routeSettleCtl/add" />"
+          method="post">
         <jsp:include page="routeSettleCtlForm.jsp"/>
     </form>
     <jsp:include page="../common/box-footer.jsp"/>
@@ -22,23 +23,7 @@
 </html>
 
 <script>
-    function check() {
-        return true;
-
-    }
     $(function () {
-        $(':checkbox').click(function () {
-            $(':checkbox', $(this).closest('li')).prop('checked', this.checked);
-        });
-
-        $('form[name="child"]').submit(function () {
-            var form = $('form[name="child"]');
-            if (!check())
-                return false;
-            Defaults.submitForm(form);
-            return false;
-        });
-
         $(".select2").select2({
             placeholder: '请选择...',
             allowClear: true
@@ -50,5 +35,43 @@
             todayBtn: 'linked',
             language: 'zh-CN'
         });
+        $('form[name="child"]').submit(function () {
+            var form = $('form[name="child"]');
+            if (!check())
+                return false;
+
+            Defaults.submitForm(form);
+            return false;
+        });
+
+        $("#iframe-child :input[name='id']").blur(function() {
+            var $this = $(this);
+           var val = $this.val();
+           $.ajax({
+               type: 'get',
+               url: '<%=request.getContextPath()%>/routeSettleCtl/check.do',
+               data: {id: val},
+               dataType: 'json',
+               success: function (json) {
+                   if (json.result_code == "000000") {
+                   }else {
+                       $this.val("");
+                       modal({
+                           type: 'error',
+                           title: '错误',
+                           text: json.result_msg
+                       });
+                   }
+               }
+           });
+        });
     });
+
+    function check() {
+        var brhName = $(':input[name="routeName"]');
+        if (!!brhName.val()) {
+            return false;
+        }
+        return true;
+    }
 </script>

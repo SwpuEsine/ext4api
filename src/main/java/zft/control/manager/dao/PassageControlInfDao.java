@@ -1,8 +1,7 @@
 package zft.control.manager.dao;
 
-import zft.control.manager.entity.PassageCostInfo;
-import zft.control.manager.entity.RoleInf;
+import zft.control.manager.entity.PassageControlInfo;
 
-public interface PassageControlInfDao extends GenericDao<PassageCostInfo, Integer> ,GridBaseDao {
+public interface PassageControlInfDao extends GenericDao<PassageControlInfo, String> ,GridBaseDao {
 
 }

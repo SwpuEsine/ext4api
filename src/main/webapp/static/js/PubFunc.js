@@ -114,6 +114,9 @@ var Defaults = {
      * @constructor
      */
     submitForm: function (form) {
+        if (!form.valid()) {
+            return false;
+        }
         show();
         $.ajax({
             url: form.attr('action'),
@@ -176,5 +179,4 @@ var Defaults = {
         });
         return this;
     },
-
-}
+};

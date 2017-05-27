@@ -1,5 +1,7 @@
 package zft.control.manager.dao.impl;
 
+import org.hibernate.SQLQuery;
+import org.springframework.jdbc.object.SqlQuery;
 import zft.control.manager.dao.UserInfDao;
 import zft.control.manager.entity.MenuInfo;
 import zft.control.manager.entity.UserInfo;
@@ -20,7 +22,7 @@ public class UserInfDaoImpl extends GenericBase<UserInfo, String> implements Use
 
     @Override
     public GridListRes<Map<String, Object>> findList(Integer offset, Integer limit, Map<String, String> params) {
-        StringBuffer sql = new StringBuffer("select a.user_id,a.tel,a.email,a.name,a.crt_ts,a.user_status" +
+        StringBuffer sql = new StringBuffer("select a.user_id,a.tel,a.email,a.name,a.crt_ts,a.user_status, a.brh_id" +
                 ",getrolename(a.role_id) role_id from user_info a where 1=1 ");
 
         SqlUtils.addSql(sql, " a.name like :name", params.get("name"));
@@ -31,20 +33,21 @@ public class UserInfDaoImpl extends GenericBase<UserInfo, String> implements Use
         query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         query.setFirstResult(offset);
         query.setMaxResults(limit);
-        SqlUtils.setParameterLike(query, "name", params.get("name"));
-        SqlUtils.setParameterLike(query, "userId", params.get("userId"));
-        SqlUtils.setParameter(query, "userStatus", params.get("userStatus"));
+        setQueryParams(query, params);
 
         GridListRes<Map<String, Object>> res = new GridListRes<>();
         res.setRows(query.list());
 
         query = this.getCurrentSession().createSQLQuery("select count(*) FROM (" + sql.toString() + ") ");
+        setQueryParams(query, params);
+        res.setTotal(Integer.parseInt(query.list().get(0).toString()));
+        return res;
+    }
+
+    private void setQueryParams(Query query, Map<String, String> params){
         SqlUtils.setParameterLike(query, "name", params.get("name"));
         SqlUtils.setParameterLike(query, "userId", params.get("userId"));
         SqlUtils.setParameter(query, "userStatus", params.get("userStatus"));
-
-        res.setTotal(Integer.parseInt(query.list().get(0).toString()));
-        return res;
     }
 
     @Override

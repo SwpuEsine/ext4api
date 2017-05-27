@@ -32,4 +32,6 @@ public interface BrhInfoService {
     void del(String brhId) throws Exception;
 
     void update(BrhInfo brhInfo) throws Exception;
+
+    boolean check(String brhId) throws Exception;
 }

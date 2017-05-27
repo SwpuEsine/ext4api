@@ -63,4 +63,4 @@ var Select = {
     clear: function (conName) {
         $("select[name='" + conName + "']").val("").trigger("change");
     }
-}
+};

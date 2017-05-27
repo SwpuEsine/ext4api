@@ -23,4 +23,6 @@ public interface RouteSettleCtlService {
 
     void delete(String id) throws Exception;
 
+    boolean check(String id) throws Exception;
+
 }

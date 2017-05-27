@@ -49,7 +49,7 @@
 
 <div class="box box-success">
     <div class="box-header with-border">
-        <h3 class="box-title">机构列表</h3>
+        <h3 class="box-title">清算通道控制列表</h3>
 
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -82,23 +82,9 @@
             {field: 'ROUTE_NAME', title: '通道名称'},
             {field: 'ROUTE_CTL_ID', title: '优先级'},
             {field: 'ROUTE_CTL_STA', title: '通道使用标识'},
-//            {field: 'ISSUER_USE_FLAG    ', title: '银行池使用标志'},
-//            {field: 'ISSUER_CD          ', title: '指定银行池'},
-//            {field: 'TXN_AMT_USE_FLAG   ', title: '交易金额设置'},
-//            {field: 'MIN_TXN_AMT        ', title: '最小金额(元)'},
-//            {field: 'MAX_TXN_AMT        ', title: '最大金额(元)'},
-//            {field: 'CITY_CODE_USE_FLAG ', title: '商户地区码使用标志'},
-//            {field: 'CITY_CODE          ', title: '商户地区码'},
-//            {field: 'MCHT_NO_USE_FLAG   ', title: '商户池使用标志'},
-//            {field: 'MCHT_NO            ', title: '指定商户池'},
-//            {field: 'STLM_TYPE_USE_FLAG ', title: '账户类型使用标志'},
             {field: 'STLM_TYPE', title: '账户类型'},
-//            {field: 'CARD_BIN_USE_FLAG  ', title: '卡BIN池使用标志'},
-//            {field: 'CARD_BIN           ', title: '指定卡BIN池'},
             {field: 'INST_CODE', title: '使用的通道'},
             {field: 'LAST_OPER_IN', title: '录入操作员'},
-//            {field: 'UPD_USR_ID         ', title: '修改操作员 '},
-//            {field: 'REC_UPD_TS         ', title: '修改时间'},
             {field: 'REC_CRT_TS', title: '录入时间'},
 
         ],

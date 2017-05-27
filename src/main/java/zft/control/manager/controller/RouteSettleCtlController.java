@@ -32,6 +32,8 @@ public class RouteSettleCtlController extends WebController {
 
     @Autowired
     private RedisService redisService;
+
+    private static final String ROUTE_STATUS = "RouteStatus";
     /**
      * 列表页面
      *
@@ -39,8 +41,7 @@ public class RouteSettleCtlController extends WebController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String toList(Model model) {
-        // TODO 添加数据字典
-        model.addAttribute("routeStatus", redisService.valNameMap("RouteStatus"));
+        model.addAttribute("routeStatus", redisService.valNameMap(ROUTE_STATUS));
         return "routeSettleCtl/routeSettleCtlList";
     }
 
@@ -55,7 +56,7 @@ public class RouteSettleCtlController extends WebController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String toAdd(Model model) {
-        model.addAttribute("routeStatus", redisService.valNameMap("RouteStatus"));
+        model.addAttribute("routeStatus", redisService.valNameMap(ROUTE_STATUS));
         return "routeSettleCtl/routeSettleCtlAdd";
     }
 
@@ -71,7 +72,6 @@ public class RouteSettleCtlController extends WebController {
         UserInfo userInfo = (UserInfo) session.getAttribute(Constants.SESSION_USER);
         routeSettleCtl.setUpdUsrId(userInfo.getUserId());
         routeSettleCtl.setLastOperIn("1");
-//        routeSettleCtl.setLastOperIn(userInfo.getUserId());
         routeSettleCtlService.save(routeSettleCtl);
         return Tools.returnWeb(Constants.SUCCESS);
     }
@@ -81,7 +81,7 @@ public class RouteSettleCtlController extends WebController {
         RouteSettleCtl routeSettleCtl = routeSettleCtlService.get(id);
         model.addAttribute("routeSettleCtl", routeSettleCtl);
         // 添加数据字典
-        model.addAttribute("routeStatus", redisService.valNameMap("RouteStatus"));
+        model.addAttribute("routeStatus", redisService.valNameMap(ROUTE_STATUS));
         return "routeSettleCtl/routeSettleCtlEdit";
     }
 
@@ -113,5 +113,14 @@ public class RouteSettleCtlController extends WebController {
         model.addAttribute("routeSettleCtl", routeSettleCtl);
         // 添加数据字典
         return "routeSettleCtl/routeSettleCtlView";
+    }
+
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseBase check(String id) throws Exception {
+        if(routeSettleCtlService.check(id)) {
+            return Tools.returnWeb(Constants.SUCCESS);
+        }
+        return Tools.returnWeb("000100", "通道编号");
     }
 }

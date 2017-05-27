@@ -42,10 +42,10 @@
             <button type="button" class="btn btn-default" onclick="Defaults.openAdd(this)" url="passageCost/add">
                 <i class="fa fa-plus"></i>&nbsp;新增
             </button>
-            <button type="button" class="btn btn-default" onclick="Defaults.openEdit(this,'USER_ID')" url="passageCost/edit">
+            <button type="button" class="btn btn-default" onclick="Defaults.openEdit(this,'DISC_CD')" url="passageCost/edit">
                 <i class="fa fa-edit"></i>&nbsp;修改
             </button>
-            <button type="button" class="btn btn-default" onclick="Defaults.openDel(this,'USER_ID')" url="passageCost/del">
+            <button type="button" class="btn btn-default" onclick="Defaults.openDel(this,'DISC_CD')" url="passageCost/del">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp;删除
             </button>
         </div>
@@ -55,6 +55,7 @@
     </div>
 </div>
 <script>
+	Pace.start()
     var TableInit = TableInit.init({
         url: '<c:url value="/passageCost/list" />',
         columns: [
@@ -85,7 +86,7 @@
         }
     });
     function query() {
-        TableInit.refresh();
+        TableInit.refresh();	
     }
 </script>
 </body>

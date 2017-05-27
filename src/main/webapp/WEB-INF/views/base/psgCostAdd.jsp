@@ -21,10 +21,22 @@
 </html>
 <script>
     $(function () {
-        $('form[name="child"]').submit(function () {
-            var form = $('form[name="child"]');
-            Defaults.submitForm(form);
-            return false;
-        });
-    });
+    	var regular={
+    			"gt-one":function(value){
+    				try{
+    			if(isNaN(value)){
+    				return false
+    			}
+    			if (parseFloat(value).toString() == "NaN") {
+    				return false	
+    			}
+    				}
+    				catch(error){
+    					return false
+    				}
+    				return true
+    			}
+    	}
+    	ValidateForm('form[name="child"]',regular)  	
+    })
 </script>

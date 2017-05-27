@@ -41,6 +41,9 @@ public class UserInfo implements Serializable {
     @Column(name = "ROLE_ID")
     private Integer roleId;//用户角色
 
+    @Column(name = "BRH_ID")
+    private String brhId;
+
     public String getUserId() {
         return userId;
     }
@@ -111,5 +114,13 @@ public class UserInfo implements Serializable {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    public String getBrhId() {
+        return brhId;
+    }
+
+    public void setBrhId(String brhId) {
+        this.brhId = brhId;
     }
 }

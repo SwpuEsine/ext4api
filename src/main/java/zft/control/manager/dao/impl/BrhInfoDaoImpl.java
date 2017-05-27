@@ -4,12 +4,10 @@ import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 import zft.control.manager.dao.BrhInfoDao;
-import zft.control.manager.dao.impl.GenericBase;
 import zft.control.manager.entity.BrhInfo;
 import zft.control.manager.objs.view.GridListRes;
 import zft.control.manager.tools.SqlUtils;
 
-import java.util.List;
 import java.util.Map;
 
 
@@ -40,21 +38,21 @@ public class BrhInfoDaoImpl extends GenericBase<BrhInfo, String> implements BrhI
         query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         query.setMaxResults(limit);
         query.setFirstResult(offset);
-        SqlUtils.setParameterLike(query, "brhId", params.get("brhId"));
-        SqlUtils.setParameterLike(query, "brhName", params.get("brhName"));
-        SqlUtils.setParameterLike(query, "brhType", params.get("brhType"));
-        SqlUtils.setParameterLike(query, "brhSta", params.get("brhSta"));
-
+        setQueryParams(query, params);
         GridListRes<Map<String, Object>> res = new GridListRes<>();
         res.setRows(query.list());
 
         query = this.getCurrentSession().createSQLQuery("SELECT COUNT(1) FROM (" + sql.toString() +")");
+        setQueryParams(query, params);
+
+        res.setTotal(Integer.parseInt(query.list().get(0).toString()));
+        return res;
+    }
+
+    private void setQueryParams(SQLQuery query, Map<String, String> params) {
         SqlUtils.setParameterLike(query, "brhId", params.get("brhId"));
         SqlUtils.setParameterLike(query, "brhName", params.get("brhName"));
         SqlUtils.setParameterLike(query, "brhType", params.get("brhType"));
         SqlUtils.setParameterLike(query, "brhSta", params.get("brhSta"));
-
-        res.setTotal(Integer.parseInt(query.list().get(0).toString()));
-        return res;
     }
 }

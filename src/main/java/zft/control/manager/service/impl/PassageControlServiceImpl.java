@@ -23,38 +23,32 @@ public class PassageControlServiceImpl implements PassageControlService{
 	@Override
 	public GridListRes<Map<String, Object>> findList(Integer offset,
 			Integer limit, Map<String, String> params) {
-		// TODO Auto-generated method stub
 		return passageControlInfDao.findList(offset, limit, params);
 	}
 
 	@Override
 	public List<PassageControlInfo> findAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return passageControlInfDao.findAll();
 	}
 
 	@Override
 	public PassageControlInfo get(String brhId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return passageControlInfDao.get(brhId);
 	}
 
 	@Override
 	public void add(PassageControlInfo passageControlInfo) throws Exception {
-		// TODO Auto-generated method stub
-		
+		passageControlInfDao.save(passageControlInfo);
 	}
 
 	@Override
 	public void del(String brhId) throws Exception {
-		// TODO Auto-generated method stub
-		
+		passageControlInfDao.delete(brhId);
 	}
 
 	@Override
 	public void update(PassageControlInfo passageControlInfo) throws Exception {
-		// TODO Auto-generated method stub
-		
+		passageControlInfDao.update(passageControlInfo);
 	}
 
 }

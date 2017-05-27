@@ -14,11 +14,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Tools {
-    public static SimpleDateFormat spf = new SimpleDateFormat("yyyyMMddHHmmss");
-    public static SimpleDateFormat spf2 = new SimpleDateFormat("yyyyMMdd");
-    public static SimpleDateFormat spf3 = new SimpleDateFormat("yyyy-MM");
-    public static SimpleDateFormat spf4 = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat spf = new SimpleDateFormat("yyyyMMddHHmmss");
+    public static final SimpleDateFormat spf2 = new SimpleDateFormat("yyyyMMdd");
+    public static final SimpleDateFormat spf3 = new SimpleDateFormat("yyyy-MM");
+    public static final SimpleDateFormat spf4 = new SimpleDateFormat("yyyy-MM-dd");
 
+    private Tools(){}
     public static ResponseBase returnWeb(String errCode, String... errMsg) {
         ResponseBase res = new ResponseBase();
         res.setResult_code(errCode);
@@ -39,18 +40,13 @@ public class Tools {
         File directory = new File(Constants.APP_DOWNLOAD_DISK);
         if (!directory.exists()) {
             directory.mkdirs();
-            return null;
+            return new File[0];
         }
-        File[] files = directory.listFiles(new FileFilter() {
-
+        return directory.listFiles(new FileFilter() {
             public boolean accept(File file) {
-                if (file.getName().startsWith("android") && file.getName().endsWith(".apk")) {
-                    return true;
-                }
-                return false;
+                return file.getName().startsWith("android") && file.getName().endsWith(".apk");
             }
         });
-        return files;
     }
 
     public static String getWebLoginId(String userId) {
@@ -67,7 +63,7 @@ public class Tools {
         final BeanWrapper src = new BeanWrapperImpl(source);
         java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
 
-        Set<String> emptyNames = new HashSet<String>();
+        Set<String> emptyNames = new HashSet();
         for (java.beans.PropertyDescriptor pd : pds) {
             Object srcValue = src.getPropertyValue(pd.getName());
             if (srcValue == null) emptyNames.add(pd.getName());

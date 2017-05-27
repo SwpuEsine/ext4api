@@ -24,6 +24,7 @@
 
 <script>
     function check() {
+        debugger
         var roleMenu = $(':input[name="roleMenu"]');
         var spCodesTemp = "";
         $(':input:checkbox:checked').each(function (i) {

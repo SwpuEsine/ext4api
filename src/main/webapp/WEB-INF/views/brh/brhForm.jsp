@@ -7,11 +7,11 @@
     }
 </style>
 
-<%--<input type="hidden" name="brhId" value="${brh.brhId}"/>--%>
 <table class="table">
     <tr>
         <td class="col-md-1"><label class="label-center">机构编号</label></td>
-        <td class="col-md-4"><input type="text" name="brhId" class="form-control" value="${brh.brhId}" style="width: 100%;"
+        <td class="col-md-4">
+            <input type="text" name="brhId" class="form-control" value="${brh.brhId}" style="width: 100%;"
                                     required/></td>
         <td class="col-md-1"><label class="label-center">机构名称</label></td>
         <td class="col-md-4"><input type="text" name="brhName" class="form-control" value="${brh.brhName}" style="width: 100%;"
